@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services;
-
+use Illuminate\Support\Facades\Log;
 use App\Models\Cliente;
 use App\Models\User;
 
@@ -12,9 +12,13 @@ class ClienteService{
     {
         return Cliente::all();
     }
+    
 
     public function criarCliente(array $data)
     {   
+
+        Log::info('Recebendo dados para criar cliente:', $data);
+
         $user = User::create([
             'nomeCompleto' => $data['nomeCompleto'],
             'email' => $data['email'],
@@ -22,14 +26,23 @@ class ClienteService{
             // 
         ]);
 
+        $userId = $user->id;
+        Log::info('Usuário criado com sucesso:', $user->toArray());
+        Log::info('O id do user é:', ['id' => $user->id]);
+        Log::info('O id do user é:', ['id' => $userId]);
+
+
         // criando o cliente aqui
+
+        
         $cliente = Cliente::create([
-            'user_id' => $user->id,
+            'user_id' => $userId,
             'cpf' => $data['cpf'],
             'telefone' => $data['telefone'],
             'endereco' => $data['endereco'],
         ]);
-
+        
+        
         return $cliente;
     }
 
