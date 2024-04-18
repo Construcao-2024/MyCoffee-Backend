@@ -3,6 +3,7 @@
 namespace App\Services;
 use Illuminate\Support\Facades\Log;
 use App\Models\Cliente;
+use App\Models\Endereco;
 use App\Models\User;
 
 
@@ -34,12 +35,21 @@ class ClienteService{
 
         // criando o cliente aqui
 
+        $endereco = Endereco::create([
+            'cep' => $data['cep'],
+            'endereco' => $data['endereco'],
+            'numero' => $data['numero'],
+            'bairro' => $data['bairro'],
+        ]);
+
+        $enderecoId = $endereco->id;
+
         
         $cliente = Cliente::create([
             'user_id' => $userId,
             'cpf' => $data['cpf'],
             'telefone' => $data['telefone'],
-            'endereco' => $data['endereco'],
+            'endereco_id' => $enderecoId,
         ]);
         
         
@@ -63,6 +73,7 @@ class ClienteService{
         $cliente = Cliente::findOrFail($id);
         $cliente->delete();
     }
+    
 
 }
 

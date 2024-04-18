@@ -36,7 +36,11 @@ class ClienteController extends Controller
             'senha' => 'required|min:6',
             'cpf' => 'required',
             'telefone' => 'required',
+            'cep' => 'required',
             'endereco' => 'required',
+            'numero' => 'required',
+            'bairro' => 'required',
+
         ]);
 
         if ($validator->fails()) {
