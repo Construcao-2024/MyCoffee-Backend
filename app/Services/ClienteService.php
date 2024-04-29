@@ -23,7 +23,7 @@ class ClienteService{
         $user = User::create([
             'nomeCompleto' => $data['nomeCompleto'],
             'email' => $data['email'],
-            'senha' => bcrypt($data['senha']),
+            'password' => bcrypt($data['password']),
             // 
         ]);
 
