@@ -33,7 +33,7 @@ class ClienteController extends Controller
         $validator = Validator::make($request->all(), [
             'nomeCompleto' => 'required',
             'email' => 'required|email|unique:users',
-            'senha' => 'required|min:6',
+            'password' => 'required|min:6',
             'cpf' => 'required',
             'telefone' => 'required',
             'cep' => 'required',
