@@ -52,7 +52,13 @@ class CategoriaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $categoria = $this->categoriaService->pesquisarPorId($id);
+        
+        if (!$categoria) {
+            return response()->json(['error' => 'Categoria não encontrada'], 404);
+        }
+        
+        return response()->json($categoria, 200);
     }
 
     /**
@@ -68,7 +74,23 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required',
+            'isDeleted' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            Log::error('Falha na validação: ' . implode(', ', $validator->errors()->all()));
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+        
+        $categoria = $this->categoriaService->atualizarCategoria($id, $request->all());
+    
+        if (!$categoria) {
+            return response()->json(['error' => 'Categoria não encontrada'], 404);
+        }
+        
+        return response()->json($categoria, 200);
     }
 
     /**
@@ -76,7 +98,14 @@ class CategoriaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $categoria = $this->categoriaService->deletarCategoria($id);
+        
+        if (!$categoria) {
+            return response()->json(['error' => 'Categoria não encontrada'], 404);
+        }
+        
+        return response()->json(['message' => 'Categoria deletada com sucesso'], 200);
+    
     }
 
 

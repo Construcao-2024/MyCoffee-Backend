@@ -8,15 +8,36 @@ use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [ClienteController::class, 'index']);
-Route::post('/', [ClienteController::class, 'store']);
+
+//cliente --------------------------------------------------------------------------------------------------------------------
+Route::get('/clientes', [ClienteController::class, 'index']);
+Route::post('/clientes', [ClienteController::class, 'store']);
+Route::get('/clientes/{id}', [ClienteController::class, 'show']);
+Route::put('/clientes/{id}', [ClienteController::class, 'update']);
+Route::delete('/clientes', [ClienteController::class, 'destroy']);
+
+//login
 Route::post('/login', [AuthController::class, 'login']);
 
-//produto
-Route::post('/produto', [ProdutoController::class, 'create']);
+//produto -----------------------------------------------------------------------------------------------------------------------------
+// Rota para listar todos os produtos
+Route::get('/produtos', [ProdutoController::class, 'index']);
+//criar um novo produto
+Route::post('/produtos', [ProdutoController::class, 'create']);
+//exibe um produto específico pelo ID
+Route::get('/produtos/{id}', [ProdutoController::class, 'show']);
+Route::put('/produtos/{id}', [ProdutoController::class, 'update']);
+//deletar um produto específico pelo ID
+Route::delete('/produtos/{id}', [ProdutoController::class, 'destroy']);
 
-//categoria
+
+
+//categoria---------------------------------------------------------------------------------------------------------------------------------
+Route::get('/categoria', [CategoriaController::class, 'index']);
 Route::post('/categoria', [CategoriaController::class, 'create']);
+Route::get('/categoria/{id}', [CategoriaController::class, 'show']);
+Route::put('/categoria/{id}', [CategoriaController::class, 'update']);
+Route::delete('/categoria/{id}', [CategoriaController::class, 'destroy']);
 
 
 

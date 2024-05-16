@@ -33,17 +33,32 @@ class ProdutoService{
 
     }
 
-    public function pesquisarPorId(){
-
+    public function pesquisarPorId($id){
+        return Produto::find($id);
     }
 
 
-    public function deletarProduto(){
-
-    }
-
-    public function atualizarProduto(){
+    public function deletarProduto($id){
+        $produto = Produto::find($id);
         
+        if ($produto) {
+            $produto->delete();
+            return true;
+        }
+        
+        return false;
+
+    }
+
+    public function atualizarProduto($id, array $data){
+        $produto = Produto::find($id);
+        
+        if ($produto) {
+            $produto->update($data);
+            return $produto;
+        }
+        
+        return null;
     }
 
 

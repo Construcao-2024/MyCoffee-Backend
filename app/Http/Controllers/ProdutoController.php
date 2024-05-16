@@ -46,7 +46,7 @@ class ProdutoController extends Controller
             Log::error('Falha na validação:', $validator->errors()->all());
             return response()->json(['errors' => $validator->errors()], 400);
         }
-
+        
         $cliente = $this->produtoService->criarProduto($request->all());
         
     
@@ -67,7 +67,13 @@ class ProdutoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $produto = $this->produtoService->pesquisarPorId($id);
+        
+        if ($produto) {
+            return response()->json($produto);
+        }
+        
+        return response()->json(['message' => 'Produto não encontrado'], 404);
     }
 
     /**
@@ -75,7 +81,7 @@ class ProdutoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -83,7 +89,14 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->all();
+        $produto = $this->produtoService->atualizarProduto($id, $data);
+        
+        if ($produto) {
+            return response()->json($produto);
+        }
+        
+        return response()->json(['message' => 'Produto não encontrado'], 404);
     }
 
     /**
@@ -91,6 +104,12 @@ class ProdutoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $success = $this->produtoService->deletarProduto($id);
+        
+        if ($success) {
+            return response()->json(['message' => 'Produto deletado com sucesso']);
+        }
+        
+        return response()->json(['message' => 'Produto não encontrado'], 404);
     }
 }
