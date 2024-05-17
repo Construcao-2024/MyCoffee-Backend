@@ -4,6 +4,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\PlanoController;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,4 +45,14 @@ Route::delete('/categoria/{id}', [CategoriaController::class, 'destroy']);
 Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
+
+
+
+//plano
+Route::get('/plano', [PlanoController::class, 'index']);
+Route::post('/plano', [PlanoController::class, 'create']);
+Route::get('/plano/{id}', [PlanoController::class, 'show']);
+Route::put('/plano/{id}', [PlanoController::class, 'update']);
+Route::delete('/plano/{id}', [PlanoController::class, 'destroy']);
+
 
