@@ -29,6 +29,8 @@ class ProdutoService{
 
         );
 
+        return $produto;
+
 
 
     }

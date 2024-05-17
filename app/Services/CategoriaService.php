@@ -15,7 +15,7 @@ class CategoriaService{
 
     public function criarCategoria(array $data){
 
-        $produto = Categoria::create([
+        $categoria = Categoria::create([
             'nome' => $data['nome'],
             'isDeleted' => $data['isDeleted'],
             
@@ -23,6 +23,8 @@ class CategoriaService{
         ]
 
         );
+
+        return $categoria;
 
 
 
