@@ -29,12 +29,12 @@ class PlanoController extends Controller
             'nome' => 'required',
             'desconto' => 'required',
             'ativo' => 'required',
-            'descontoAnual' => 'descontoAnual',
-            'descontoMensal' => 'descontoMensal',
-            'preco' => 'preco',
-            'descricao' => 'descricao',
-            'frete' => 'frete',
-            'qntCafe' => 'qntCafe',
+            'descontoAnual' => 'required',
+            'descontoMensal' => 'required',
+            'preco' => 'required',
+            'descricao' => 'required',
+            'frete' => 'required',
+            'qntCafe' => 'required',
         ]);
 
         if($validator->fails()){
@@ -66,12 +66,12 @@ class PlanoController extends Controller
             'nome' => 'required',
             'desconto' => 'required',
             'ativo' => 'required',
-            'descontoAnual' => 'descontoAnual',
-            'descontoMensal' => 'descontoMensal',
-            'preco' => 'preco',
-            'descricao' => 'descricao',
-            'frete' => 'frete',
-            'qntCafe' => 'qntCafe',
+            'descontoAnual' => 'required',
+            'descontoMensal' => 'required',
+            'preco' => 'required',
+            'descricao' => 'required',
+            'frete' => 'required',
+            'qntCafe' => 'required',
         ]);
 
         if ($validator->fails()) {

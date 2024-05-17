@@ -28,6 +28,8 @@ class PlanoService{
             // 
         ]);
 
+        return $plano;
+
     }
 
     public function pesquisarPorId($id){
