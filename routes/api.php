@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PlanoController;
+use App\http\Controllers\CargoController;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -55,4 +56,12 @@ Route::get('/plano/{id}', [PlanoController::class, 'show']);
 Route::put('/plano/{id}', [PlanoController::class, 'update']);
 Route::delete('/plano/{id}', [PlanoController::class, 'destroy']);
 
+
+
+//cargo
+Route::get('/cargo', [CargoController::class, 'index']);
+Route::post('/cargo', [CargoController::class, 'create']);
+Route::get('/cargo/{id}', [CargoController::class, 'show']);
+Route::put('/cargo/{id}', [CargoController::class, 'update']);
+Route::delete('/cargo/{id}', [CargoController::class, 'destroy']);
 
