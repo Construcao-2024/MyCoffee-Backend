@@ -6,7 +6,9 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PlanoController;
 use App\http\Controllers\CargoController;
+use App\Http\Controllers\FuncionarioController;
 use App\Models\Categoria;
+use App\Services\FuncionarioService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -64,4 +66,13 @@ Route::post('/cargo', [CargoController::class, 'create']);
 Route::get('/cargo/{id}', [CargoController::class, 'show']);
 Route::put('/cargo/{id}', [CargoController::class, 'update']);
 Route::delete('/cargo/{id}', [CargoController::class, 'destroy']);
+
+
+
+//funcionario
+Route::get('/funcionario', [FuncionarioController::class, 'index']);
+Route::post('/funcionario', [FuncionarioController::class, 'create']);
+Route::get('/funcionario/{id}', [FuncionarioController::class, 'show']);
+Route::put('/funcionario/{id}', [FuncionarioController::class, 'update']);
+Route::delete('/funcionario/{id}', [FuncionarioController::class, 'destroy']);
 
