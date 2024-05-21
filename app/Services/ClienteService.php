@@ -24,6 +24,7 @@ class ClienteService{
             'nomeCompleto' => $data['nomeCompleto'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'fotoPerfil'=>$data['fotoPerfil'] ?? null,
             // 
         ]);
 

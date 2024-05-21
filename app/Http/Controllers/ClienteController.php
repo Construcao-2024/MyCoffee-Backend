@@ -35,6 +35,7 @@ class ClienteController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'cpf' => 'required',
+            'fotoDePerfil'=> 'nullable',
             'telefone' => 'required',
             'cep' => 'required',
             'endereco' => 'required',
