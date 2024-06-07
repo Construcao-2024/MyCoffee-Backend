@@ -23,6 +23,12 @@ Route::delete('/clientes', [ClienteController::class, 'destroy']);
 //login
 Route::post('/login', [AuthController::class, 'login']);
 
+//
+/*Route::get('/csrf-token', function () {
+    return response()->json(['csrf_token' => csrf_token()]);
+});*/
+
+
 //produto -----------------------------------------------------------------------------------------------------------------------------
 // Rota para listar todos os produtos
 Route::get('/produtos', [ProdutoController::class, 'index']);
