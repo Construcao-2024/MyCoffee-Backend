@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PlanoController;
 use App\http\Controllers\CargoController;
 use App\Http\Controllers\FuncionarioController;
+use App\Http\Middleware\CheckPermission;
 use App\Models\Categoria;
 use App\Services\FuncionarioService;
 use Illuminate\Http\Request;
@@ -18,10 +19,15 @@ Route::get('/clientes', [ClienteController::class, 'index']);
 Route::post('/clientes', [ClienteController::class, 'store']);
 Route::get('/clientes/{id}', [ClienteController::class, 'show']);
 Route::put('/clientes/{id}', [ClienteController::class, 'update']);
-Route::delete('/clientes', [ClienteController::class, 'destroy']);
+Route::delete('/clientes/{id}', [ClienteController::class, 'destroy'])->middleware('permission:funcionario');
+
+
 
 //login
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
+
 
 //
 /*Route::get('/csrf-token', function () {

@@ -22,7 +22,8 @@ class User extends Authenticatable implements JWTSubject
         'nomeCompleto',
         'email',
         'password',
-        'fotoDePerfil'
+        'fotoDePerfil',
+        'permission'
     ];
 
     /**
@@ -63,5 +64,15 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Cargo::class);
+    }
+
+    public function hasPermission($permission)
+    {
+        return $this->permission === $permission;
     }
 }
