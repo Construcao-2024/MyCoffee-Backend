@@ -69,12 +69,15 @@ class ClienteService{
         return $cliente;
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id){
+        
         $cliente = Cliente::findOrFail($id);
+        $user = User::findOrFail($cliente->user_id);
+        $user->delete();
         $cliente->delete();
+
     }
-    
+
 
 }
 
