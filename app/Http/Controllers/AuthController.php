@@ -1,47 +1,37 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Exception;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        Log::info('Tentativa de login com as seguintes credenciais: ' . json_encode($credentials));
+        try {
+            $credentials = $request->only('email', 'password');
 
-
-        if (Auth::attempt($credentials)) {
-            $user = User::find(Auth::id());
-
-            if ($user) {
-                Log::info('Usuário encontrado com sucesso: ' . $user->email);
-            } else {
-                Log::warning('Usuário não encontrado após autenticação.');
+            if (! $token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
-            
-            $token = $user->createToken('MyAppToken')->plainTextToken;
-            Log::info('Usuário autenticado com sucesso: ' . $user->email);
-            //return response()->json(['ok' => 'authorized'], 200);
+
             return response()->json(['token' => $token]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Could not create token', 'message' => $e->getMessage()], 500);
         }
-
-        else{
-            Log::warning('Tentativa de login falhou para o email: ' . $credentials['email']);
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        
     }
 
-    
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->json(['message' => 'Logged out']);
+        try {
+            JWTAuth::invalidate($request->token);
+            return response()->json(['message' => 'Logged out successfully']);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Could not log out', 'message' => $e->getMessage()], 500);
+        }
     }
 }
