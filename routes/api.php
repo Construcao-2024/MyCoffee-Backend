@@ -7,11 +7,13 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PlanoController;
 use App\http\Controllers\CargoController;
 use App\Http\Controllers\FuncionarioController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckPermission;
 use App\Models\Categoria;
 use App\Services\FuncionarioService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 //cliente --------------------------------------------------------------------------------------------------------------------
@@ -21,6 +23,12 @@ Route::get('/clientes/{id}', [ClienteController::class, 'show']);
 Route::put('/clientes/{id}', [ClienteController::class, 'update']);
 Route::delete('/clientes/{id}', [ClienteController::class, 'destroy'])->middleware('permission:funcionario');
 
+/*Route::middleware('auth:api')->group(function(){
+    Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);//->middleware('permission:funcionario');
+});*/
+
+Route::get('/user/{id}', [UserController::class, 'show']);
+
 
 
 //login
@@ -29,10 +37,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 
-//
-/*Route::get('/csrf-token', function () {
-    return response()->json(['csrf_token' => csrf_token()]);
-});*/
 
 
 //produto -----------------------------------------------------------------------------------------------------------------------------
@@ -57,9 +61,6 @@ Route::delete('/categoria/{id}', [CategoriaController::class, 'destroy']);
 
 
 
-Route::get('/csrf-token', function () {
-    return response()->json(['csrf_token' => csrf_token()]);
-});
 
 
 
