@@ -50,6 +50,8 @@ Route::put('/produtos/{id}', [ProdutoController::class, 'update']);
 //deletar um produto específico pelo ID
 Route::delete('/produtos/{id}', [ProdutoController::class, 'destroy']);
 
+Route::get('/produtosCategoria/{id}', [ProdutoController::class, 'produtosPorCategoria']);
+
 
 
 //categoria---------------------------------------------------------------------------------------------------------------------------------
