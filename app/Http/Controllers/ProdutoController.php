@@ -112,4 +112,17 @@ class ProdutoController extends Controller
         
         return response()->json(['message' => 'Produto não encontrado'], 404);
     }
+
+    public function produtosPorCategoria($idCategoria)
+{
+        $produtos = $this->produtoService->pesquisarPorIdCategoria($idCategoria);
+    
+        if (count($produtos) > 0) {
+            return response()->json($produtos);
+        }
+    
+        return response()->json(['message' => 'Nenhum produto encontrado para essa categoria'], 404);
+}
+
+    
 }
