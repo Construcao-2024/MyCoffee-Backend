@@ -98,11 +98,16 @@ class ClienteController extends Controller
 
     public function destroy($id)
     {
+        Log::info('Requisição de deleção recebida', ['id' => $id]);
+
         try {
             $this->clienteService->destroy($id);
+            Log::info('Cliente deletado com sucesso', ['id' => $id]);
+    
             return response()->json(['message' => 'Cliente deletado com sucesso']);
         } catch (\Exception $e) {
             Log::error('Erro ao deletar cliente:', ['id' => $id, 'message' => $e->getMessage()]);
+    
             return response()->json(['message' => 'Cliente não encontrado'], 404);
         }
     }
