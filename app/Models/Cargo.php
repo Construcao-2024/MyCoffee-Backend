@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Cargo extends Model
 {
     protected $fillable = ["nome", "isDeleted"];
+
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
