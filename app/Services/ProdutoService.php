@@ -63,6 +63,10 @@ class ProdutoService{
         return null;
     }
 
+    public function pesquisarPorIdCategoria($idCategoria){
+        return Produto::where('idCategoria', $idCategoria)->get();
+    }
+
 
 }
 
