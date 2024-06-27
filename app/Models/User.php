@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Carrinho;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -74,5 +75,10 @@ class User extends Authenticatable implements JWTSubject
     public function hasPermission($permission)
     {
         return $this->permission === $permission;
+    }
+
+    public function carrinho()
+    {
+        return $this->hasOne(Carrinho::class);
     }
 }

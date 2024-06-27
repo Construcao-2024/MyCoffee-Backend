@@ -31,6 +31,16 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        // Primeiro, remova as chaves estrangeiras
+        Schema::table('compra_produto', function (Blueprint $table) {
+            $table->dropForeign(['compra_id']);
+            $table->dropForeign(['produto_id']);
+        });
+
+        // Em seguida, remova as tabelas
+        Schema::dropIfExists('compra_produto');
+        Schema::dropIfExists('compras');
+        Schema::dropIfExists('produtos');
     }
+    
 };
