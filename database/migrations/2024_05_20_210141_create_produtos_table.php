@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('idCategoria')->references('id')->on('categorias')->onDelete('cascade');
             $table->string('nome');
             $table->string('marca');
-            $table->string('preco');
+            $table->decimal('preco', 8, 2);
             $table->string('codigoBarras');
             $table->string('descricao');
             $table->string('quantidade');
