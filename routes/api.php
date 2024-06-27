@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PlanoController;
 use App\http\Controllers\CargoController;
 use App\Http\Controllers\FuncionarioController;
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckPermission;
 use App\Models\Categoria;
@@ -90,4 +91,19 @@ Route::post('/funcionario', [FuncionarioController::class, 'create']);
 Route::get('/funcionario/{id}', [FuncionarioController::class, 'show']);
 Route::put('/funcionario/{id}', [FuncionarioController::class, 'update']);
 Route::delete('/funcionario/{id}', [FuncionarioController::class, 'destroy']);
+
+
+
+//// compras
+
+
+//Route::get('/compra', [CompraController::class, 'index']);
+Route::post('/compra', [CompraController::class, 'store']);
+Route::get('/compra/{id}', [CompraController::class, 'getProducts']);
+//Route::get('/compraTotal/{id}', [CompraController::class, 'calculateTotal']);
+//Route::put('/compra/{id}', [CompraController::class, 'update']);
+//Route::delete('/compraDelete/{id}', [CompraController::class, 'destroy']);
+
+
+
 

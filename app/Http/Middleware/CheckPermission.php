@@ -11,8 +11,10 @@ class CheckPermission
 {
     public function handle(Request $request, Closure $next, $permission)
     {
+        Log::info('Checking user permissions');
         /** @var \App\Models\User $user */
-        $user = Auth::user();
+        $user = Auth::guard('api')->user();
+        
         Log::info('User:', ['user' => $user]);  // Depuração
 
         if ($user && $user->hasPermission($permission)) {
