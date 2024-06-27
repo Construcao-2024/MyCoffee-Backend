@@ -9,6 +9,7 @@ use App\http\Controllers\CargoController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CarrinhoController;
 use App\Http\Middleware\CheckPermission;
 use App\Models\Categoria;
 use App\Services\FuncionarioService;
@@ -103,6 +104,18 @@ Route::get('/compra/{id}', [CompraController::class, 'getProducts']);
 //Route::get('/compraTotal/{id}', [CompraController::class, 'calculateTotal']);
 //Route::put('/compra/{id}', [CompraController::class, 'update']);
 //Route::delete('/compraDelete/{id}', [CompraController::class, 'destroy']);
+
+
+
+/*Route::post('/carrinho', [CarrinhoController::class, 'addToCart']);
+Route::get('/carrinho', [CarrinhoController::class, 'getCart']);
+Route::delete('/carrinho/{carrinhoProdutoId}', [CarrinhoController::class, 'removeFromCart']);*/
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    // Rotas protegidas por autenticação JWT
+    Route::post('/carrinho', [CarrinhoController::class, 'addToCart']);
+    Route::delete('/carrinho/{carrinhoProdutoId}', [CarrinhoController::class, 'removeFromCart']);
+});
 
 
 

@@ -15,4 +15,11 @@ class Produto extends Model
                     ->withPivot('quantidade', 'preco')
                     ->withTimestamps();
     }
+
+    public function carrinhos()
+    {
+        return $this->belongsToMany(CarrinhoProduto::class, 'carrinho_produto')
+                    ->withPivot('quantidade')
+                    ->withTimestamps();
+    }
 }
