@@ -7,7 +7,6 @@ use App\Services\CargoService;
 use Illuminate\Support\Facades\Validator;
 
 
-
 class CargoController extends Controller
 {
     protected $cargoService;
@@ -16,12 +15,14 @@ class CargoController extends Controller
     {
         $this->cargoService = $cargoService;
     }
+
     
     public function index()
     {
         return $this->cargoService->index();
     }
 
+    
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -41,6 +42,8 @@ class CargoController extends Controller
 
     }
 
+    
+
     public function show(string $id)
     {
         $cargo = $this->cargoService->pesquisarPorId($id);
@@ -51,6 +54,8 @@ class CargoController extends Controller
         
         return response()->json($cargo, 200);
     }
+
+   
 
     public function update(Request $request, string $id)
     {
@@ -72,6 +77,7 @@ class CargoController extends Controller
         
         return response()->json($cargo, 200);
     }
+
 
     
     public function destroy(string $id)
