@@ -19,11 +19,15 @@ use Illuminate\Support\Facades\Route;
 
 
 //cliente --------------------------------------------------------------------------------------------------------------------
+
+
 Route::get('/clientes', [ClienteController::class, 'index']);
 Route::post('/clientes', [ClienteController::class, 'store']);
 Route::get('/clientes/{id}', [ClienteController::class, 'show']);
 Route::put('/clientes/{id}', [ClienteController::class, 'update']);
-Route::delete('/clientes/{id}', [ClienteController::class, 'destroy'])->middleware('permission:funcionario');
+
+
+
 
 /*Route::middleware('auth:api')->group(function(){
     Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);//->middleware('permission:funcionario');
@@ -34,9 +38,7 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 
 
 //login
-Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 
 
@@ -54,7 +56,7 @@ Route::delete('/produtos/{id}', [ProdutoController::class, 'destroy']);
 
 Route::get('/produtosCategoria/{id}', [ProdutoController::class, 'produtosPorCategoria']);
 
-
+Route::post('/login', [AuthController::class, 'login']);
 
 //categoria---------------------------------------------------------------------------------------------------------------------------------
 Route::get('/categoria', [CategoriaController::class, 'index']);
@@ -114,7 +116,11 @@ Route::delete('/carrinho/{carrinhoProdutoId}', [CarrinhoController::class, 'remo
 Route::group(['middleware' => 'jwt.auth'], function () {
     // Rotas protegidas por autenticação JWT
     Route::post('/carrinho', [CarrinhoController::class, 'addToCart']);
+    Route::get('/carrinho', [CarrinhoController::class, 'getCart']);
     Route::delete('/carrinho/{carrinhoProdutoId}', [CarrinhoController::class, 'removeFromCart']);
+    Route::post('/compra', [CompraController::class, 'store']);
+    Route::delete('/clientes/{id}', [ClienteController::class, 'destroy'])->middleware('permission:funcionario');
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 });
 
 
