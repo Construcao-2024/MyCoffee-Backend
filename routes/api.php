@@ -114,7 +114,7 @@ Route::get('/carrinho', [CarrinhoController::class, 'getCart']);
 Route::delete('/carrinho/{carrinhoProdutoId}', [CarrinhoController::class, 'removeFromCart']);*/
 
 Route::group(['middleware' => 'jwt.auth'], function () {
-    // Rotas protegidas por autenticação JWT
+    //autenticação JWT
     Route::post('/carrinho', [CarrinhoController::class, 'addToCart']);
     Route::get('/carrinho', [CarrinhoController::class, 'getCart']);
     Route::delete('/carrinho/{carrinhoProdutoId}', [CarrinhoController::class, 'removeFromCart']);

@@ -8,6 +8,53 @@ use Illuminate\Support\Facades\Log;
 use App\Services\FuncionarioService;
 
 
+/**
+ * @OA\Schema(
+ *     schema="Funcionario",
+ *     type="object",
+ *     title="Funcionario",
+ *     description="Funcionario schema",
+ *     @OA\Property(
+ *         property="nomeCompleto",
+ *         type="string",
+ *         description="Nome completo do funcionário"
+ *     ),
+ *     @OA\Property(
+ *         property="email",
+ *         type="string",
+ *         format="email",
+ *         description="Email do funcionário"
+ *     ),
+ *     @OA\Property(
+ *         property="password",
+ *         type="string",
+ *         description="Senha do funcionário"
+ *     ),
+ *     @OA\Property(
+ *         property="cpf",
+ *         type="string",
+ *         description="CPF do funcionário"
+ *     ),
+ *     @OA\Property(
+ *         property="fotoDePerfil",
+ *         type="string",
+ *         nullable=true,
+ *         description="URL da foto de perfil do funcionário"
+ *     ),
+ *     @OA\Property(
+ *         property="cargo_id",
+ *         type="integer",
+ *         description="ID do cargo do funcionário"
+ *     ),
+ *     @OA\Property(
+ *         property="isDeleted",
+ *         type="boolean",
+ *         description="Status de deleção do funcionário"
+ *     )
+ * )
+ */
+
+
 class FuncionarioController extends Controller
 {
     protected $funcionarioService;
@@ -17,10 +64,47 @@ class FuncionarioController extends Controller
         $this->funcionarioService = $funcionarioService;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/funcionarios",
+     *     summary="Get list of funcionarios",
+     *     tags={"Funcionarios"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Funcionario"))
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request"
+     *     )
+     * )
+     */
+
     public function index()
     {
         return $this->funcionarioService->index();
     }
+
+    /**
+     * @OA\Post(
+     *     path="/api/funcionarios",
+     *     summary="Create a new funcionario",
+     *     tags={"Funcionarios"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Funcionario")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Funcionario created successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation error"
+     *     )
+     * )
+     */
 
     public function create(Request $request)
     {
@@ -47,6 +131,29 @@ class FuncionarioController extends Controller
 
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/funcionarios/{id}",
+     *     summary="Get funcionario by ID",
+     *     tags={"Funcionarios"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/Funcionario")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Funcionario not found"
+     *     )
+     * )
+     */
+
     public function show(string $id)
     {
         $funcionario = $this->funcionarioService->pesquisarPorId($id);
@@ -57,6 +164,33 @@ class FuncionarioController extends Controller
         
         return response()->json($funcionario, 200);
     }
+
+    /**
+     * @OA\Put(
+     *     path="/api/funcionarios/{id}",
+     *     summary="Update a funcionario",
+     *     tags={"Funcionarios"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Funcionario")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Funcionario updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Funcionario")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Funcionario not found"
+     *     )
+     * )
+     */
 
     public function update(Request $request, string $id)
     {
@@ -84,6 +218,28 @@ class FuncionarioController extends Controller
         
         return response()->json($funcionario, 200);
     }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/funcionarios/{id}",
+     *     summary="Delete a funcionario",
+     *     tags={"Funcionarios"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Funcionario deleted successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Funcionario not found"
+     *     )
+     * )
+     */
 
     public function destroy(string $id)
     {
