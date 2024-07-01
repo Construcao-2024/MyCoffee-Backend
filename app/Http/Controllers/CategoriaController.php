@@ -14,11 +14,56 @@ class CategoriaController extends Controller
     {
         $this->categoriaService = $categoriaService;
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/categorias",
+     *     summary="Get a list of all categories",
+     *     tags={"Categorias"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(type="array", @OA\Items(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="nome", type="string"),
+     *             @OA\Property(property="isDeleted", type="boolean")
+     *         ))
+     *     )
+     * )
+     */
     
     public function index()
     {
         return $this->categoriaService->index();
     }
+
+    /**
+     * @OA\Post(
+     *     path="/api/categorias",
+     *     summary="Create a new category",
+     *     tags={"Categorias"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nome", type="string"),
+     *             @OA\Property(property="isDeleted", type="boolean")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Category created successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="nome", type="string"),
+     *             @OA\Property(property="isDeleted", type="boolean")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation error"
+     *     )
+     * )
+     */
 
     public function create(Request $request)
     {
@@ -47,9 +92,34 @@ class CategoriaController extends Controller
         //
     }
 
+    
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/categorias/{id}",
+     *     summary="Get a specific category by ID",
+     *     tags={"Categorias"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="nome", type="string"),
+     *             @OA\Property(property="isDeleted", type="boolean")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Category not found"
+     *     )
+     * )
      */
+
     public function show(string $id)
     {
         $categoria = $this->categoriaService->pesquisarPorId($id);
@@ -69,9 +139,45 @@ class CategoriaController extends Controller
         //
     }
 
+    
     /**
-     * Update the specified resource in storage.
-     */
+     * @OA\Put(
+     *     path="/api/categorias/{id}",
+     *     summary="Update a specific category by ID",
+     *     tags={"Categorias"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nome", type="string"),
+     *             @OA\Property(property="isDeleted", type="boolean")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Category updated successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="nome", type="string"),
+     *             @OA\Property(property="isDeleted", type="boolean")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation error"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Category not found"
+     *     )
+     * )
+     */ 
+    
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
@@ -94,8 +200,30 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/categorias/{id}",
+     *     summary="Delete a specific category by ID",
+     *     tags={"Categorias"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Category deleted successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Category not found"
+     *     )
+     * )
      */
+
     public function destroy(string $id)
     {
         $categoria = $this->categoriaService->deletarCategoria($id);

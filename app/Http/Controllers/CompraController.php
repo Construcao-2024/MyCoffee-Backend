@@ -21,21 +21,105 @@ class CompraController extends Controller
         $this->compraService = $compraService;
     }
 
-    //    faz um Busca de uma compra especifica com seus produtos
+    /**
+     * @OA\Get(
+     *     path="/api/compras/{id}",
+     *     summary="Get a specific compra with its products",
+     *     tags={"Compras"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="user_id", type="integer"),
+     *             @OA\Property(property="created_at", type="string", format="date-time"),
+     *             @OA\Property(property="updated_at", type="string", format="date-time"),
+     *             @OA\Property(property="produtos", type="array", @OA\Items(
+     *                 @OA\Property(property="id", type="integer"),
+     *                 @OA\Property(property="nome", type="string"),
+     *                 @OA\Property(property="preco", type="number"),
+     *                 @OA\Property(property="quantidade", type="integer")
+     *             ))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Compra not found"
+     *     )
+     * )
+     */
+
     public function show($id)
     {
         $compra = $this->compraService->getComprasComProdutos($id);
         return response()->json($compra);
     }
 
-    // Retornar todos os produtos de uma compra específica
+    /**
+     * @OA\Get(
+     *     path="/api/compras/{id}/produtos",
+     *     summary="Get all products of a specific compra",
+     *     tags={"Compras"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(type="array", @OA\Items(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="nome", type="string"),
+     *             @OA\Property(property="preco", type="number"),
+     *             @OA\Property(property="quantidade", type="integer")
+     *         ))
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Compra not found"
+     *     )
+     * )
+     */
+
     public function getProducts($id)
     {
         $produtos = $this->compraService->getProdutosByComprasId($id);
         return response()->json($produtos);
     }
 
-    // Calcular o total de uma compra
+    /**
+     * @OA\Get(
+     *     path="/api/compras/{id}/total",
+     *     summary="Calculate the total of a compra",
+     *     tags={"Compras"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="total", type="number")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Compra not found"
+     *     )
+     * )
+     */
+
     public function calculateTotal($id)
     {
         $total = $this->compraService->calculateTotal($id);
@@ -53,6 +137,49 @@ class CompraController extends Controller
         $this->compraService->addProdutoToCompra($id, $validatedData['produto_id'], $validatedData['quantidade']);
         return response()->json(['message' => 'produto adicionado k k']);
     }*/
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/compras",
+     *     summary="Create a new compra",
+     *     tags={"Compras"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="user_id", type="integer"),
+     *             @OA\Property(property="produtos", type="array", @OA\Items(
+     *                 @OA\Property(property="produto_id", type="integer"),
+     *                 @OA\Property(property="quantidade", type="integer")
+     *             ))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Compra created successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="user_id", type="integer"),
+     *             @OA\Property(property="created_at", type="string", format="date-time"),
+     *             @OA\Property(property="updated_at", type="string", format="date-time"),
+     *             @OA\Property(property="produtos", type="array", @OA\Items(
+     *                 @OA\Property(property="id", type="integer"),
+     *                 @OA\Property(property="nome", type="string"),
+     *                 @OA\Property(property="preco", type="number"),
+     *                 @OA\Property(property="quantidade", type="integer")
+     *             ))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="An unexpected error occurred"
+     *     )
+     * )
+     */
 
     public function store(Request $request)
     {

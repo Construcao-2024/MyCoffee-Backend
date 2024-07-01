@@ -17,6 +17,23 @@ class ProdutoController extends Controller
     {
         $this->produtoService = $produtoService;
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/produtos",
+     *     summary="Get list of products",
+     *     tags={"Produtos"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Produto"))
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request"
+     *     )
+     * )
+     */
     
     public function index()
     {
@@ -24,8 +41,25 @@ class ProdutoController extends Controller
     }
     
     /**
-     * Show the form for creating a new resource.
+     * @OA\Post(
+     *     path="/api/produtos",
+     *     summary="Create a new product",
+     *     tags={"Produtos"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Produto")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Product created successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation error"
+     *     )
+     * )
      */
+
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -63,8 +97,28 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/produtos/{id}",
+     *     summary="Get product by ID",
+     *     tags={"Produtos"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/Produto")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Product not found"
+     *     )
+     * )
      */
+
     public function show(string $id)
     {
         $produto = $this->produtoService->pesquisarPorId($id);
@@ -85,8 +139,32 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/produtos/{id}",
+     *     summary="Update a product",
+     *     tags={"Produtos"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Produto")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Product updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Produto")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Product not found"
+     *     )
+     * )
      */
+    
     public function update(Request $request, string $id)
     {
         $data = $request->all();
@@ -100,8 +178,27 @@ class ProdutoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/produtos/{id}",
+     *     summary="Delete a product",
+     *     tags={"Produtos"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Product deleted successfully"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Product not found"
+     *     )
+     * )
      */
+
     public function destroy(string $id)
     {
         $success = $this->produtoService->deletarProduto($id);
@@ -112,6 +209,30 @@ class ProdutoController extends Controller
         
         return response()->json(['message' => 'Produto não encontrado'], 404);
     }
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/produtos/categoria/{idCategoria}",
+     *     summary="Get products by category",
+     *     tags={"Produtos"},
+     *     @OA\Parameter(
+     *         name="idCategoria",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/Produto"))
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No products found for this category"
+     *     )
+     * )
+     */
 
     public function produtosPorCategoria($idCategoria)
 {
