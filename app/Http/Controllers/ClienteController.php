@@ -289,4 +289,49 @@ class ClienteController extends Controller
             return response()->json(['message' => 'Cliente não encontrado'], 404);
         }
     }
+
+    /**
+ * @OA\Get(
+ *     path="/api/clientes/user/{userId}",
+ *     summary="Get client information by user ID",
+ *     tags={"Clientes"},
+ *     @OA\Parameter(
+ *         name="userId",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="id", type="integer"),
+ *             @OA\Property(property="nomeCompleto", type="string"),
+ *             @OA\Property(property="email", type="string"),
+ *             @OA\Property(property="cpf", type="string"),
+ *             @OA\Property(property="telefone", type="string"),
+ *             @OA\Property(property="cep", type="string"),
+ *             @OA\Property(property="endereco", type="string"),
+ *             @OA\Property(property="numero", type="string"),
+ *             @OA\Property(property="bairro", type="string"),
+ *             @OA\Property(property="fotoDePerfil", type="string", nullable=true)
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Client not found"
+ *     )
+ * )
+ */
+public function getClienteByUserId($userId)
+{
+    try {
+        $cliente = Cliente::where('user_id', $userId)->firstOrFail();
+        return response()->json($cliente);
+    } catch (\Exception $e) {
+        Log::error('Cliente não encontrado:', ['userId' => $userId, 'message' => $e->getMessage()]);
+        return response()->json(['message' => 'Cliente não encontrado'], 404);
+    }
+}
+
 }

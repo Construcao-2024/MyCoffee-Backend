@@ -1093,6 +1093,73 @@
                 }
             }
         },
+        "/api/clientes/user/{userId}": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Get client information by user ID",
+                "operationId": "d11866d8543176b1bd83c7f552487662",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "nomeCompleto": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "cpf": {
+                                            "type": "string"
+                                        },
+                                        "telefone": {
+                                            "type": "string"
+                                        },
+                                        "cep": {
+                                            "type": "string"
+                                        },
+                                        "endereco": {
+                                            "type": "string"
+                                        },
+                                        "numero": {
+                                            "type": "string"
+                                        },
+                                        "bairro": {
+                                            "type": "string"
+                                        },
+                                        "fotoDePerfil": {
+                                            "type": "string",
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found"
+                    }
+                }
+            }
+        },
         "/api/compras/{id}": {
             "get": {
                 "tags": [
