@@ -15,6 +15,11 @@ class Cliente extends User implements JWTSubject
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class, 'user_id');
+    }
+
     public function endereco()
     {
         return $this->belongsTo(Endereco::class, 'endereco_id');

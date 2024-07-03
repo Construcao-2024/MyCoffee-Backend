@@ -25,6 +25,7 @@ Route::get('/clientes', [ClienteController::class, 'index']);
 Route::post('/clientes', [ClienteController::class, 'store']);
 Route::get('/clientes/{id}', [ClienteController::class, 'show']);
 Route::put('/clientes/{id}', [ClienteController::class, 'update']);
+Route::get('clientes/user/{userId}', [ClienteController::class, 'getClienteByUserId']);
 
 
 
