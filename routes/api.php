@@ -21,11 +21,17 @@ use Illuminate\Support\Facades\Route;
 //cliente --------------------------------------------------------------------------------------------------------------------
 
 
-Route::get('/clientes', [ClienteController::class, 'index']);
-Route::post('/clientes', [ClienteController::class, 'store']);
-Route::get('/clientes/{id}', [ClienteController::class, 'show']);
-Route::put('/clientes/{id}', [ClienteController::class, 'update']);
+
+
 Route::get('clientes/user/{userId}', [ClienteController::class, 'getClienteByUserId']);
+
+Route::middleware(['jwt.auth'])->group(function () {
+    //autenticação JWT', 'second'])->group(function () {
+    Route::put('/clientes/{id}', [ClienteController::class, 'update']);
+    
+
+    
+});
 
 
 
@@ -46,25 +52,13 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 
 //produto -----------------------------------------------------------------------------------------------------------------------------
 // Rota para listar todos os produtos
-Route::get('/produtos', [ProdutoController::class, 'index']);
-//criar um novo produto
-Route::post('/produtos', [ProdutoController::class, 'create']);
-//exibe um produto específico pelo ID
-Route::get('/produtos/{id}', [ProdutoController::class, 'show']);
-Route::put('/produtos/{id}', [ProdutoController::class, 'update']);
-//deletar um produto específico pelo ID
-Route::delete('/produtos/{id}', [ProdutoController::class, 'destroy']);
+
 
 Route::get('/produtosCategoria/{id}', [ProdutoController::class, 'produtosPorCategoria']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
 //categoria---------------------------------------------------------------------------------------------------------------------------------
-Route::get('/categoria', [CategoriaController::class, 'index']);
-Route::post('/categoria', [CategoriaController::class, 'create']);
-Route::get('/categoria/{id}', [CategoriaController::class, 'show']);
-Route::put('/categoria/{id}', [CategoriaController::class, 'update']);
-Route::delete('/categoria/{id}', [CategoriaController::class, 'destroy']);
 
 
 
@@ -72,38 +66,70 @@ Route::delete('/categoria/{id}', [CategoriaController::class, 'destroy']);
 
 
 //plano
-Route::get('/plano', [PlanoController::class, 'index']);
-Route::post('/plano', [PlanoController::class, 'create']);
-Route::get('/plano/{id}', [PlanoController::class, 'show']);
-Route::put('/plano/{id}', [PlanoController::class, 'update']);
-Route::delete('/plano/{id}', [PlanoController::class, 'destroy']);
+
 
 
 
 //cargo
-Route::get('/cargo', [CargoController::class, 'index']);
-Route::post('/cargo', [CargoController::class, 'create']);
-Route::get('/cargo/{id}', [CargoController::class, 'show']);
-Route::put('/cargo/{id}', [CargoController::class, 'update']);
-Route::delete('/cargo/{id}', [CargoController::class, 'destroy']);
+
 
 
 
 //funcionario
-Route::get('/funcionario', [FuncionarioController::class, 'index']);
-Route::post('/funcionario', [FuncionarioController::class, 'create']);
-Route::get('/funcionario/{id}', [FuncionarioController::class, 'show']);
-Route::put('/funcionario/{id}', [FuncionarioController::class, 'update']);
-Route::delete('/funcionario/{id}', [FuncionarioController::class, 'destroy']);
 
 
+Route::middleware(['jwt.auth', 'permission:funcionario'])->group(function () {
+    //autenticação JWT', 'second'])->group(function () {
 
+    Route::get('/funcionario', [FuncionarioController::class, 'index']);
+    Route::post('/funcionario', [FuncionarioController::class, 'create']);
+    Route::get('/funcionario/{id}', [FuncionarioController::class, 'show']);
+    Route::put('/funcionario/{id}', [FuncionarioController::class, 'update']);
+    Route::delete('/funcionario/{id}', [FuncionarioController::class, 'destroy']);
+    Route::get('/cargo', [CargoController::class, 'index']);
+    Route::post('/cargo', [CargoController::class, 'create']);
+    Route::get('/cargo/{id}', [CargoController::class, 'show']);
+    Route::put('/cargo/{id}', [CargoController::class, 'update']);
+    Route::delete('/cargo/{id}', [CargoController::class, 'destroy']);
+    
+    Route::post('/plano', [PlanoController::class, 'create']);
+    
+    Route::put('/plano/{id}', [PlanoController::class, 'update']);
+    Route::delete('/plano/{id}', [PlanoController::class, 'destroy']);
+
+    
+    Route::post('/categoria', [CategoriaController::class, 'create']);
+    
+    Route::put('/categoria/{id}', [CategoriaController::class, 'update']);
+    Route::delete('/categoria/{id}', [CategoriaController::class, 'destroy']);
+
+    
+//criar um novo produto
+    Route::post('/produtos', [ProdutoController::class, 'create']);
+//exibe um produto específico pelo ID
+    
+    Route::put('/produtos/{id}', [ProdutoController::class, 'update']);
+//deletar um produto específico pelo ID
+    Route::delete('/produtos/{id}', [ProdutoController::class, 'destroy']);
+
+    Route::get('/clientes', [ClienteController::class, 'index']);
+    
+    Route::get('/clientes/{id}', [ClienteController::class, 'show']);
+
+});
+Route::get('/plano', [PlanoController::class, 'index']);
+Route::get('/plano/{id}', [PlanoController::class, 'show']);
+Route::get('/categoria/{id}', [CategoriaController::class, 'show']);
+Route::get('/categoria', [CategoriaController::class, 'index']);
+Route::get('/produtos/{id}', [ProdutoController::class, 'show']);
+Route::get('/produtos', [ProdutoController::class, 'index']);
+Route::post('/clientes', [ClienteController::class, 'store']);
 //// compras
 
 
 //Route::get('/compra', [CompraController::class, 'index']);
-Route::post('/compra', [CompraController::class, 'store']);
-Route::get('/compra/{id}', [CompraController::class, 'getProducts']);
+//Route::post('/compra', [CompraController::class, 'store']);
+//Route::get('/compra/{id}', [CompraController::class, 'getProducts']);
 //Route::get('/compraTotal/{id}', [CompraController::class, 'calculateTotal']);
 //Route::put('/compra/{id}', [CompraController::class, 'update']);
 //Route::delete('/compraDelete/{id}', [CompraController::class, 'destroy']);
@@ -114,15 +140,30 @@ Route::get('/compra/{id}', [CompraController::class, 'getProducts']);
 Route::get('/carrinho', [CarrinhoController::class, 'getCart']);
 Route::delete('/carrinho/{carrinhoProdutoId}', [CarrinhoController::class, 'removeFromCart']);*/
 
-Route::group(['middleware' => 'jwt.auth'], function () {
-    //autenticação JWT
+
+
+Route::middleware(['jwt.auth', 'permission:cliente'])->group(function () {
+    //autenticação JWT', 'second'])->group(function () {
     Route::post('/carrinho', [CarrinhoController::class, 'addToCart']);
     Route::get('/carrinho', [CarrinhoController::class, 'getCart']);
     Route::delete('/carrinho/{carrinhoProdutoId}', [CarrinhoController::class, 'removeFromCart']);
     Route::post('/compra', [CompraController::class, 'store']);
-    Route::delete('/clientes/{id}', [ClienteController::class, 'destroy'])->middleware('permission:funcionario');
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
+    Route::get('/compra/{id}', [CompraController::class, 'getProducts']);
+    Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);//->middleware('permission:funcionario');
+    
 });
+
+Route::middleware(['jwt.auth', 'auth:api'])->group(function () {
+    //autenticação JWT', 'second'])->group(function () {
+
+    Route::post('/logout', [AuthController::class, 'logout']);//->middleware('auth:api');
+
+    
+});
+
+
+
+
 
 
 
