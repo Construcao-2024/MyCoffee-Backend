@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nome');
             $table->string('desconto');
             $table->string('ativo');
-            $table->string('descontoAnual');
-            $table->string('descontoMensal');
+            $table->string('precoAnual');
+            $table->string('precoMensal');
             $table->string('preco');
             $table->string('descricao');
             $table->string('frete');
