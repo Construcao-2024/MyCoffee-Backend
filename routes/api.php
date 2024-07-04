@@ -10,6 +10,8 @@ use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarrinhoController;
+use App\Http\Controllers\EnderecoController;
+use App\Http\Controllers\RelatorioController;
 use App\Http\Middleware\CheckPermission;
 use App\Models\Categoria;
 use App\Services\FuncionarioService;
@@ -82,12 +84,12 @@ Route::middleware(['jwt.auth', 'permission:funcionario'])->group(function () {
     //autenticação JWT', 'second'])->group(function () {
 
     Route::get('/funcionario', [FuncionarioController::class, 'index']);
-    Route::post('/funcionario', [FuncionarioController::class, 'create']);
+    //Route::post('/funcionario', [FuncionarioController::class, 'create']);   descomentar ----------------
     Route::get('/funcionario/{id}', [FuncionarioController::class, 'show']);
     Route::put('/funcionario/{id}', [FuncionarioController::class, 'update']);
     Route::delete('/funcionario/{id}', [FuncionarioController::class, 'destroy']);
     Route::get('/cargo', [CargoController::class, 'index']);
-    Route::post('/cargo', [CargoController::class, 'create']);
+    //Route::post('/cargo', [CargoController::class, 'create']);  descomentar ------------------------
     Route::get('/cargo/{id}', [CargoController::class, 'show']);
     Route::put('/cargo/{id}', [CargoController::class, 'update']);
     Route::delete('/cargo/{id}', [CargoController::class, 'destroy']);
@@ -102,6 +104,7 @@ Route::middleware(['jwt.auth', 'permission:funcionario'])->group(function () {
     
     Route::put('/categoria/{id}', [CategoriaController::class, 'update']);
     Route::delete('/categoria/{id}', [CategoriaController::class, 'destroy']);
+    
 
     
 //criar um novo produto
@@ -150,7 +153,7 @@ Route::middleware(['jwt.auth', 'permission:cliente'])->group(function () {
     Route::post('/compra', [CompraController::class, 'store']);
     Route::get('/compra/{id}', [CompraController::class, 'getProducts']);
     Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);//->middleware('permission:funcionario');
-    
+    Route::get('/enderecos/{id}', [EnderecoController::class, 'show']);
 });
 
 Route::middleware(['jwt.auth', 'auth:api'])->group(function () {
@@ -160,6 +163,10 @@ Route::middleware(['jwt.auth', 'auth:api'])->group(function () {
 
     
 });
+
+Route::post('/funcionario', [FuncionarioController::class, 'create']);
+Route::post('/cargo', [CargoController::class, 'create']);
+Route::get('/relatorio', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
 
 
 

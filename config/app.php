@@ -15,6 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -121,9 +122,16 @@ return [
     |
     */
 
+    
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    'aliases' => [
+        // Outros aliases...
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+    ],
+
 
 ];
