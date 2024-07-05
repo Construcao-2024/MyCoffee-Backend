@@ -166,7 +166,7 @@ Route::middleware(['jwt.auth', 'auth:api'])->group(function () {
 
     
 });
-
+Route::delete('/cart', [CarrinhoController::class, 'clearCart']);
 Route::post('/funcionario', [FuncionarioController::class, 'create']);
 Route::post('/cargo', [CargoController::class, 'create']);
 Route::get('/relatorio', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
