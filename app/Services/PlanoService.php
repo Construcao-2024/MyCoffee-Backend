@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Models\Plano;
+use App\Models\Cliente;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -30,6 +31,24 @@ class PlanoService{
 
         return $plano;
 
+    }
+
+    public function assinarPlano($planoId, $clienteId)
+    {
+        $plano = Plano::find($planoId);
+        $cliente = Cliente::find($clienteId);
+
+        if (!$plano || !$cliente) {
+            return ['success' => false, 'message' => 'Plano ou cliente não encontrado'];
+        }
+
+        // assina plano
+        $cliente->plano()->associate($plano);
+        $cliente->save();
+
+        Log::info("Cliente ID {$clienteId} assinou o plano ID {$planoId}");
+
+        return ['success' => true];
     }
 
     public function pesquisarPorId($id){

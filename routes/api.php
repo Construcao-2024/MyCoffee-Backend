@@ -143,7 +143,7 @@ Route::post('/clientes', [ClienteController::class, 'store']);
 Route::get('/carrinho', [CarrinhoController::class, 'getCart']);
 Route::delete('/carrinho/{carrinhoProdutoId}', [CarrinhoController::class, 'removeFromCart']);*/
 
-
+// ----------------- CLIENTE---------------------------------------------------------------------------------------------
 
 Route::middleware(['jwt.auth', 'permission:cliente'])->group(function () {
     //autenticação JWT', 'second'])->group(function () {
@@ -154,6 +154,8 @@ Route::middleware(['jwt.auth', 'permission:cliente'])->group(function () {
     Route::get('/compra/{id}', [CompraController::class, 'getProducts']);
     Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);//->middleware('permission:funcionario');
     Route::get('/enderecos/{id}', [EnderecoController::class, 'show']);
+    Route::post('/planos/{id}/assinar', [PlanoController::class, 'assinarPlano']);
+
 });
 
 Route::middleware(['jwt.auth', 'auth:api'])->group(function () {
