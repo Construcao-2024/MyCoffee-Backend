@@ -7,10 +7,10 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-# Nome do Projeto
+# MyCoffee
 
 ## Descrição
-Uma breve descrição do que o seu projeto faz.
+Aplicação web de e-commerce da disciplina de Construção de software. MyCofee é uma loja de cafés e produtos relacionados, com assinaturas e benefícios.
 
 ## Pré-requisitos
 - [Node.js](https://nodejs.org/en/download/)
