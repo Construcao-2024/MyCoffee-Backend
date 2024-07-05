@@ -24,7 +24,7 @@ class ProdutoService{
             'codigoBarras' => $data['codigoBarras'],
             'descricao' => $data['descricao'],
             'quantidade' => $data['quantidade'],
-            'imagem' => $data['imagem'], // Armazena o caminho da imagem
+            'imagens' => $data['imagens'], //imagens ao invez de imagem
             'desconto' => $data['desconto'],
             'isDeleted' => $data['isDeleted'],
         ]);

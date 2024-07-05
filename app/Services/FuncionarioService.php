@@ -68,6 +68,11 @@ class FuncionarioService{
 
     }
 
+    public function searchByUserId(string $user_id)
+{
+    return Funcionario::where('user_id', $user_id)->first();
+}
+
     public function atualizarFuncionario($id, array $data){
         $funcionario = Funcionario::find($id);
         
