@@ -57,11 +57,12 @@ class ProdutoController extends Controller
      *         response=400,
      *         description="Validation error"
      *     )
-     * )
+     * ) 
      */
 
     public function create(Request $request)
     {
+        // commit atual
         $validator = Validator::make($request->all(), [
             'idCategoria' => 'required',
             'nome' => 'required',
