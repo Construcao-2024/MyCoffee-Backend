@@ -1590,10 +1590,10 @@
                                             "ativo": {
                                                 "type": "boolean"
                                             },
-                                            "descontoAnual": {
+                                            "precoAnual": {
                                                 "type": "string"
                                             },
-                                            "descontoMensal": {
+                                            "precoMensal": {
                                                 "type": "string"
                                             },
                                             "preco": {
@@ -1641,10 +1641,10 @@
                                     "ativo": {
                                         "type": "boolean"
                                     },
-                                    "descontoAnual": {
+                                    "precoAnual": {
                                         "type": "string"
                                     },
-                                    "descontoMensal": {
+                                    "PrecoMensal": {
                                         "type": "string"
                                     },
                                     "preco": {
@@ -1708,10 +1708,10 @@
                                         "ativo": {
                                             "type": "boolean"
                                         },
-                                        "descontoAnual": {
+                                        "precoAnual": {
                                             "type": "string"
                                         },
-                                        "descontoMensal": {
+                                        "precoMensal": {
                                             "type": "string"
                                         },
                                         "preco": {
@@ -1768,10 +1768,10 @@
                                     "ativo": {
                                         "type": "boolean"
                                     },
-                                    "descontoAnual": {
+                                    "precoAnual": {
                                         "type": "string"
                                     },
-                                    "descontoMensal": {
+                                    "precoMensal": {
                                         "type": "string"
                                     },
                                     "preco": {
@@ -1808,10 +1808,10 @@
                                         "ativo": {
                                             "type": "boolean"
                                         },
-                                        "descontoAnual": {
+                                        "precoAnual": {
                                             "type": "string"
                                         },
-                                        "descontoMensal": {
+                                        "precoMensal": {
                                             "type": "string"
                                         },
                                         "preco": {
@@ -1859,6 +1859,52 @@
                     },
                     "404": {
                         "description": "Plano not found"
+                    }
+                }
+            }
+        },
+        "/api/planos/{id}/assinar": {
+            "post": {
+                "tags": [
+                    "Planos"
+                ],
+                "summary": "Assinar um plano",
+                "operationId": "bdb9f05b6d5fcc1aebe5e19a5c495d8c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "cliente_id": {
+                                        "description": "ID do cliente que está assinando o plano",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Plano assinado com sucesso"
+                    },
+                    "404": {
+                        "description": "Plano ou cliente não encontrado"
+                    },
+                    "400": {
+                        "description": "Erro de validação"
                     }
                 }
             }
