@@ -20,7 +20,7 @@ class ProdutoService{
             'codigoBarras' => $data['codigoBarras'],
             'descricao' => $data['descricao'],
             'quantidade' => $data['quantidade'],
-            'imagens' => $data['imagens'],
+            'imagens' => $data['imagens'], //imagens ao invez de imagem
             'desconto' => $data['desconto'],
             'isDeleted' => $data['isDeleted'],
             'idCategoria' => $data['idCategoria']

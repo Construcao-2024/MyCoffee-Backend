@@ -177,3 +177,4 @@ Route::get('/funcionarios/user/{user_id}', [FuncionarioController::class, 'searc
 
 
 
+
