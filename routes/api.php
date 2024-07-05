@@ -93,18 +93,20 @@ Route::middleware(['jwt.auth', 'permission:funcionario'])->group(function () {
     Route::get('/cargo/{id}', [CargoController::class, 'show']);
     Route::put('/cargo/{id}', [CargoController::class, 'update']);
     Route::delete('/cargo/{id}', [CargoController::class, 'destroy']);
-    
+    Route::get('/funcionarios/user/{user_id}', [FuncionarioController::class, 'searchByUserId']);
     Route::post('/plano', [PlanoController::class, 'create']);
-    
+    Route::post('/funcionario', [FuncionarioController::class, 'create']);
+    Route::post('/cargo', [CargoController::class, 'create']);
     Route::put('/plano/{id}', [PlanoController::class, 'update']);
     Route::delete('/plano/{id}', [PlanoController::class, 'destroy']);
-
+    Route::post('/funcionario', [FuncionarioController::class, 'create']);
+    Route::post('/cargo', [CargoController::class, 'create']);
     
     Route::post('/categoria', [CategoriaController::class, 'create']);
     
     Route::put('/categoria/{id}', [CategoriaController::class, 'update']);
     Route::delete('/categoria/{id}', [CategoriaController::class, 'destroy']);
-    
+    Route::get('/relatorio', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
 
     
 //criar um novo produto
@@ -126,7 +128,7 @@ Route::get('/categoria/{id}', [CategoriaController::class, 'show']);
 Route::get('/categoria', [CategoriaController::class, 'index']);
 Route::get('/produtos/{id}', [ProdutoController::class, 'show']);
 Route::get('/produtos', [ProdutoController::class, 'index']);
-Route::post('/clientes', [ClienteController::class, 'store']);
+Route::post('/clientes', [ClienteController::class, 'store']); 
 //// compras
 
 
@@ -166,10 +168,9 @@ Route::middleware(['jwt.auth', 'auth:api'])->group(function () {
     
 });
 Route::delete('/cart', [CarrinhoController::class, 'clearCart']);
-Route::post('/funcionario', [FuncionarioController::class, 'create']);
-Route::post('/cargo', [CargoController::class, 'create']);
-Route::get('/relatorio', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
-Route::get('/funcionarios/user/{user_id}', [FuncionarioController::class, 'searchByUserId']);
+
+
+
 
 
 
