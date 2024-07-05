@@ -155,6 +155,7 @@ Route::middleware(['jwt.auth', 'permission:cliente'])->group(function () {
     Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);//->middleware('permission:funcionario');
     Route::get('/enderecos/{id}', [EnderecoController::class, 'show']);
     Route::post('/planos/{id}/assinar', [PlanoController::class, 'assinarPlano']);
+    Route::delete('/cart', [CarrinhoController::class, 'clearCart']);
 
 });
 

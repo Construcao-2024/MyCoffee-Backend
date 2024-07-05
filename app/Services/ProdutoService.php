@@ -15,12 +15,7 @@ class ProdutoService{
 
     public function criarProduto(array $data)
     {
-        // Se a imagem estiver presente, faça o upload
-        if (isset($data['imagem'])) {
-            $imagemPath = $data['imagem']->store('produtos', 'public');
-            $data['imagem'] = $imagemPath;
-        }
-
+        //  estamos recebendo apenas o caminho.
         $produto = Produto::create([
             'idCategoria' => $data['idCategoria'],
             'nome' => $data['nome'],
