@@ -226,6 +226,58 @@ class PlanoController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/api/planos/{id}/assinar",
+     *     summary="Assinar um plano",
+     *     tags={"Planos"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="cliente_id", type="integer", description="ID do cliente que está assinando o plano")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Plano assinado com sucesso"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Plano ou cliente não encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Erro de validação"
+     *     )
+     * )
+     */
+    public function assinarPlano(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'cliente_id' => 'required|integer|exists:clientes,id',
+        ]);
+
+        if ($validator->fails()) {
+            Log::error('Erro de validação: ' . implode(', ', $validator->errors()->all()));
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $result = $this->planoService->assinarPlano($id, $request->input('cliente_id'));
+
+        if ($result['success']) {
+            return response()->json(['message' => 'Plano assinado com sucesso'], 200);
+        } else {
+            return response()->json(['error' => $result['message']], 404);
+        }
+    }
+    
+
+    /**
      * @OA\Delete(
      *     path="/api/planos/{id}",
      *     summary="Delete a plano",

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends User implements JWTSubject
 {
-    protected $fillable = ['user_id', 'cpf', 'telefone', 'endereco_id', 'isDeleted'];
+    protected $fillable = ['user_id','plano_id', 'cpf', 'telefone', 'endereco_id', 'isDeleted'];
 
     public function user()
     {
@@ -23,6 +23,11 @@ class Cliente extends User implements JWTSubject
     public function endereco()
     {
         return $this->belongsTo(Endereco::class, 'endereco_id');
+    }
+
+    public function plano()
+    {
+        return $this->belongsTo(Plano::class, 'plano_id');
     }
 
     public function getJWTIdentifier()

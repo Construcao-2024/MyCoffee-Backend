@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('endereco_id'); // FK
+            $table->unsignedBigInteger('plano_id')->nullable();
+            $table->foreign('plano_id')->references('id')->on('planos')->onDelete('set null');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('cpf');
             $table->string('telefone');
