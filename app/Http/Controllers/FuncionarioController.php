@@ -192,6 +192,40 @@ class FuncionarioController extends Controller
      * )
      */
 
+
+    /**
+ * @OA\Get(
+ *     path="/api/funcionarios/user/{user_id}",
+ *     summary="Get funcionario by user ID",
+ *     tags={"Funcionarios"},
+ *     @OA\Parameter(
+ *         name="user_id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="string")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *         @OA\JsonContent(ref="#/components/schemas/Funcionario")
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Funcionario not found"
+ *     )
+ * )
+ */
+public function searchByUserId(string $user_id)
+{
+    $funcionario = $this->funcionarioService->searchByUserId($user_id);
+
+    if (!$funcionario) {
+        return response()->json(['error' => 'Funcionario não encontrado'], 404);
+    }
+
+    return response()->json($funcionario, 200);
+}
+
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [

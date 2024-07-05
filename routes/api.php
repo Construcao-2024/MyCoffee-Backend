@@ -169,7 +169,7 @@ Route::delete('/cart', [CarrinhoController::class, 'clearCart']);
 Route::post('/funcionario', [FuncionarioController::class, 'create']);
 Route::post('/cargo', [CargoController::class, 'create']);
 Route::get('/relatorio', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
-
+Route::get('/funcionarios/user/{user_id}', [FuncionarioController::class, 'searchByUserId']);
 
 
 
