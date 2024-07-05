@@ -71,7 +71,7 @@ class ProdutoController extends Controller
             'codigoBarras' => 'required',
             'descricao' => 'required',
             'quantidade' => 'required',
-            'imagens' => 'required',
+            'imagens' => 'required|string|max:255',
             'desconto' => 'required',
             'isDeleted' => 'required'
 
