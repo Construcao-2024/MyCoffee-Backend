@@ -64,16 +64,20 @@ class ProdutoController extends Controller
     {
         // commit atual
         $validator = Validator::make($request->all(), [
-            'idCategoria' => 'required|integer',
-            'nome' => 'required|string|max:255',
-            'marca' => 'required|string|max:255',
-            'preco' => 'required|numeric',
-            'codigoBarras' => 'required|string|max:255',
-            'descricao' => 'required|string',
-            'quantidade' => 'required|integer',
-            'imagem' => 'required|string|max:255',
-            'desconto' => 'required|numeric',
-            'isDeleted' => 'required|boolean'
+
+            'idCategoria' => 'required',
+            'nome' => 'required',
+            'marca' => 'required',
+            'preco' => 'required',
+            'codigoBarras' => 'required',
+            'descricao' => 'required',
+            'quantidade' => 'required',
+            'imagens' => 'required|string|max:255',
+            'desconto' => 'required',
+            'isDeleted' => 'required'
+
+
+
         ]);
 
         if ($validator->fails()) {
