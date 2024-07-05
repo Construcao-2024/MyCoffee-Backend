@@ -65,3 +65,12 @@ Aplicação web de e-commerce da disciplina de Construção de software. MyCofee
     ```bash
     npm start
     ```
+
+para teste
+funcionario
+    "email": "supremoadm@gmail.com",
+	"password": "12345678"
+
+ cliente:
+"email": "cliente@gmail.com",
+	"password": "12345678"
