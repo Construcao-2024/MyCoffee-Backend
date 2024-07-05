@@ -61,42 +61,31 @@ class ProdutoController extends Controller
      */
 
      public function create(Request $request)
-     {
-         // 
-         $validator = Validator::make($request->all(), [
-             'idCategoria' => 'required|integer',
-             'nome' => 'required|string|max:255',
-             'marca' => 'required|string|max:255',
-             'preco' => 'required|numeric',
-             'codigoBarras' => 'required|string|max:255',
-             'descricao' => 'required|string',
-             'quantidade' => 'required|integer',
-             'imagem' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-             'desconto' => 'required|numeric',
-             'isDeleted' => 'required|boolean'
-         ]);
- 
-         // valida
-         if ($validator->fails()) {
-             Log::error('Falha na validação:', $validator->errors()->all());
-             return response()->json(['errors' => $validator->errors()], 400);
-         }
- 
-         // aqui prrocessar a imagem
-         $path = null;
-         if ($request->hasFile('imagem')) {
-             $path = $request->file('imagem')->store('produtos', 'public');
-         }
- 
-         // Preparar dados do produto
-         $produtoData = $request->all();
-         $produtoData['imagem'] = $path;
- 
-         // Criar o produto
-         $produto = $this->produtoService->criarProduto($produtoData);
- 
-         return response()->json($produto, 201);
-     }
+    {
+        $validator = Validator::make($request->all(), [
+            'idCategoria' => 'required|integer',
+            'nome' => 'required|string|max:255',
+            'marca' => 'required|string|max:255',
+            'preco' => 'required|numeric',
+            'codigoBarras' => 'required|string|max:255',
+            'descricao' => 'required|string',
+            'quantidade' => 'required|integer',
+            'imagem' => 'required|string|max:255',
+            'desconto' => 'required|numeric',
+            'isDeleted' => 'required|boolean'
+        ]);
+
+        if ($validator->fails()) {
+            Log::error('Falha na validação:', $validator->errors()->all());
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $produtoData = $request->all();
+
+        $produto = $this->produtoService->criarProduto($produtoData);
+
+        return response()->json($produto, 201);
+    }
 
     /**
      * Store a newly created resource in storage.
