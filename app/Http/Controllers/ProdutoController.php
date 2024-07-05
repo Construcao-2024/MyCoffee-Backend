@@ -60,10 +60,11 @@ class ProdutoController extends Controller
      * ) 
      */
 
-    public function create(Request $request)
+     public function create(Request $request)
     {
         // commit atual
         $validator = Validator::make($request->all(), [
+
             'idCategoria' => 'required',
             'nome' => 'required',
             'marca' => 'required',
@@ -75,18 +76,20 @@ class ProdutoController extends Controller
             'desconto' => 'required',
             'isDeleted' => 'required'
 
+
+
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             Log::error('Falha na validação:', $validator->errors()->all());
             return response()->json(['errors' => $validator->errors()], 400);
         }
-        
-        $cliente = $this->produtoService->criarProduto($request->all());
-        
-    
-        return response()->json($cliente, 201);
 
+        $produtoData = $request->all();
+
+        $produto = $this->produtoService->criarProduto($produtoData);
+
+        return response()->json($produto, 201);
     }
 
     /**
