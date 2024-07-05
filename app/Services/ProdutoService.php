@@ -3,6 +3,8 @@
 namespace App\Services;
 use Illuminate\Support\Facades\Log;
 use App\Models\Produto;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class ProdutoService{
@@ -11,28 +13,23 @@ class ProdutoService{
         return Produto::all();
     }
 
-    public function criarProduto(array $data){
-
+    public function criarProduto(array $data)
+    {
+        //  estamos recebendo apenas o caminho.
         $produto = Produto::create([
+            'idCategoria' => $data['idCategoria'],
             'nome' => $data['nome'],
             'marca' => $data['marca'],
             'preco' => $data['preco'],
             'codigoBarras' => $data['codigoBarras'],
             'descricao' => $data['descricao'],
             'quantidade' => $data['quantidade'],
-            'imagens' => $data['imagens'],
+            'imagem' => $data['imagem'], // Armazena o caminho da imagem
             'desconto' => $data['desconto'],
             'isDeleted' => $data['isDeleted'],
-            'idCategoria' => $data['idCategoria']
-            
-        ]
-
-        );
+        ]);
 
         return $produto;
-
-
-
     }
 
     public function pesquisarPorId($id){
@@ -52,14 +49,26 @@ class ProdutoService{
 
     }
 
-    public function atualizarProduto($id, array $data){
+    public function atualizarProduto($id, array $data)
+    {
         $produto = Produto::find($id);
         
         if ($produto) {
+            if (isset($data['imagem'])) {
+                // Remove a imagem antiga se existir
+                if ($produto->imagem) {
+                    Storage::disk('public')->delete($produto->imagem);
+                }
+
+                // Armazena a nova imagem
+                $imagemPath = $data['imagem']->store('produtos', 'public');
+                $data['imagem'] = $imagemPath;
+            }
+            
             $produto->update($data);
             return $produto;
         }
-        
+
         return null;
     }
 
